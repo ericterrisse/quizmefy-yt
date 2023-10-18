@@ -181,18 +181,20 @@ const MCQ = ({ game }: Props) => {
 						</Button>
 					);
 				})}
-				<Button
-					className="mt-2"
-					disabled={isChecking}
-					onClick={() => {
-						handleNext();
-					}}
-				>
-					{isChecking && (
-						<Loader2 className="w-4 h-4 mr-2 animate-spin" />
-					)}
-					Next <ChevronRight className="w-4 h-4 ml-2" />
-				</Button>
+				<div className="flex flex-col items-center justify-center w-full">
+					<Button
+						className="mt-2"
+						disabled={isChecking}
+						onClick={() => {
+							handleNext();
+						}}
+					>
+						{isChecking && (
+							<Loader2 className="w-4 h-4 mr-2 animate-spin" />
+						)}
+						Next <ChevronRight className="w-4 h-4 ml-2" />
+					</Button>
+				</div>
 			</div>
 		</div>
 	);
