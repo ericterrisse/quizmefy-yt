@@ -1,23 +1,38 @@
-import React from 'react'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card'
-import CustomWordCloud from '../CustomWordCloud'
+import React from "react";
+import {
+	Card,
+	CardContent,
+	CardDescription,
+	CardHeader,
+	CardTitle,
+} from "../ui/card";
+import CustomWordCloud from "../CustomWordCloud";
+import { db } from "@/lib/db";
 
 interface Props {}
 
-const HotTopicsCard = (props: Props) => {
-  return (
-    <Card className='col-span-4'>
-        <CardHeader>
-            <CardTitle className='text-2xl font-bold'>Hot Topics</CardTitle>
-            <CardDescription>
-                Click on a topic to start a quiz on it!
-            </CardDescription>
-        </CardHeader>
-        <CardContent className='pl-2'>
-            <CustomWordCloud />
-        </CardContent>
-    </Card>
-  )
-}
+const HotTopicsCard = async (props: Props) => {
+	const topics = await db.topicCount.findMany({});
+	const formattedTopics = topics.map((topic) => {
+		return {
+			text: topic.topic,
+			value: topic.count,
+		};
+	});
 
-export default HotTopicsCard
+	return (
+		<Card className="col-span-4">
+			<CardHeader>
+				<CardTitle className="text-2xl font-bold">Hot Topics</CardTitle>
+				<CardDescription>
+					Click on a topic to start a quiz on it!
+				</CardDescription>
+			</CardHeader>
+			<CardContent className="pl-2">
+				<CustomWordCloud formattedTopics={formattedTopics} />
+			</CardContent>
+		</Card>
+	);
+};
+
+export default HotTopicsCard;

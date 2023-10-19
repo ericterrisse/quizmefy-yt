@@ -19,8 +19,8 @@ const RecentActivities = async (props: Props) => {
 		return redirect("/");
 	}
 	const gamesCount = await db.game.count({
-		where: {userId: session.user.id}
-	})
+		where: { userId: session.user.id },
+	});
 	return (
 		<Card className="col-span-4 lg:col-span-3">
 			<CardHeader>

@@ -27,6 +27,21 @@ export async function POST(req: Request, res: Response) {
 			},
 		});
 
+		await db.topicCount.upsert({
+			where: {
+				topic,
+			},
+			create: {
+				topic,
+				count: 1,
+			},
+			update: {
+				count: {
+					increment: 1,
+				},
+			},
+		});
+
 		const { data } = await axios.post(
 			`${process.env.API_URL as string}/api/questions`,
 			{
@@ -46,7 +61,7 @@ export async function POST(req: Request, res: Response) {
 			};
 
 			const manyData = data.questions.map((question: mcqQuestion) => {
-				// mix up the options lol
+				// mix up the options
 				const options = [
 					question.option1,
 					question.option2,
